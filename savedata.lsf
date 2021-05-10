@@ -1,0 +1,35 @@
+# This file can save the monitor named as monitorname
+# as the file named as filename.
+# We use z to distinguish the monitors.
+
+#===========================
+#          Settings
+#===========================
+z = 1;
+monitorname = "monitor_"+num2str(z);
+filename = "results_"+num2str(z);
+#===========================
+#          Settings
+#===========================
+
+#===========================
+#          Process
+#===========================
+x=getdata(monitorname,"x");
+y=getdata(monitorname,"y");
+z=getdata(monitorname,"z");
+f=getdata(monitorname,"f");
+Ex=getdata(monitorname,"Ex");
+Ey=getdata(monitorname,"Ey");
+Ez=getdata(monitorname,"Ez");
+#===========================
+#          Process
+#===========================
+
+#===========================
+#          Save Data
+#===========================
+matlabsave(filename,x,y,z,Ex,Ey,Ez);
+#===========================
+#          Save Data
+#===========================

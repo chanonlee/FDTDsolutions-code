@@ -1,0 +1,35 @@
+closeall;
+switchtolayout;
+
+# This file can set serials of monitors.
+
+#===========================
+#          Settings
+#===========================
+xspan = 5*10e-7;
+yspan = 5*10e-7;
+z = [1,2,3,4,5,6,7,8,9,10];
+#===========================
+#          Settings
+#===========================
+
+#===========================
+#        Set Monitors
+#===========================
+Num = size(z);
+for(m=0;m<Num;m=m+1)
+{
+	x = 0;
+	y = 0;
+	addpower;
+	set("name",m);
+	set("monitor type",7); 
+	set("x",x);
+	set("x span",xspan);
+	set("y",y);
+	set("y span",yspan);
+	set("z",z(m+1)*10e-7);
+}
+#===========================
+#        Set Monitors
+#===========================

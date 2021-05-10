@@ -1,0 +1,52 @@
+#This file can set numbers of rectangle holes 
+# with the angle of a focus len in the FDTD
+
+#===========================
+#          Settings
+#===========================
+lambda = 0.633e-6;# wavelength
+C = 40; #half number of holes
+period = 0.2e-6; # the distance between holes
+rec_L = 0.14e-6; # the length of holes
+rec_W = 0.06e-6; # the width of holes
+zmax = 0e-6; # the highest z of holes
+zmin = -0.1e-6; # the lowest z of holes
+f = 6.5e-6; # focus
+material = "etch"; # material of holes.Usually etch as nothing.
+#===========================
+#          Settings
+#===========================
+
+#===========================
+#          Process
+#===========================
+k = 2*pi/lambda;
+for(M=0:2*C)
+{
+    for(N=0:2*C)
+    {
+        a=(M-C)*period;
+        b=(N-C)*period;
+        r = sqrt((a)^2+(b)^2);
+        theta = atan2((b),(a));
+        if(r^2 <= (alength/2)^2)
+        {
+            ang = exp(1i *k*(sqrt(r^2+f^2)-f));
+            addrect;
+            set("x",a);
+            set("x span",rec_W);
+            set("y",b);
+            set("y span",rec_L);
+            set("z max",zmax);
+            set("z min",zmin);
+            set("first axis","z");
+            ang = angle(ang)/pi*180;                        
+            set("rotation 1",ang);
+            set("material", material);
+            }
+        }   
+    }
+}
+#===========================
+#          Process
+#===========================

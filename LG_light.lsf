@@ -1,0 +1,63 @@
+clear;
+
+# This file will create a file named "t-80.mat"
+# which can be imported into the FDTD light source
+
+#===========================
+#          Settings
+#===========================
+N=1500;
+xs=linspace(-3e-6,3e-6,N);
+ys=linspace(-3e-6,3e-6,N);
+
+l=0;# 拓扑荷数 topology
+w0=1e-6;#束腰半径
+lambda0=0.532e-6;# 波长 wavelength
+
+filename="t-80";
+#===========================
+#          Settings
+#===========================
+
+#===========================
+#          Process
+#===========================
+x=meshgridx(xs,ys);
+y=meshgridy(xs,ys);
+phi=atan2(y,x);
+r=sqrt(x^2+y^2);
+z=0;
+
+k=2*pi/lambda0;
+zr=k*w0^2/2;wz=w0*sqrt(1+(z/zr)^2);
+f = c/lambda0;
+w = 2*pi*f;
+s=1;
+a=1:1:abs(l);
+for(arg=a){
+    s=s*arg;
+    }
+factor=sqrt(2/(pi*s))*1/w0;
+factor2=(sqrt(2)*r/w0)^abs(l);
+E1=factor*factor2*exp(-r^2/w0^2)*exp(-1i*l*phi)*exp(1i*pi/180*90);
+ma=max(abs(E1));
+E0=E1/ma;
+#===========================
+#          Process
+#===========================
+
+#===========================
+#       Save as .mat
+#===========================
+Ex = E0;
+Ey = E0*(1i);#“+”为右旋，指向z方向，“-”为左旋，指向-z方向。
+Ez = 0;
+
+EM = rectilineardataset("EM fields",xs,ys,z);
+EM.addparameter("lambda",c/f,"f",f);   
+EM.addattribute("E",Ex,Ey,Ez);
+visualize(EM);
+matlabsave(filename,EM); 
+#===========================
+#       Save as .mat
+#===========================
