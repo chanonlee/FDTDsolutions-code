@@ -1,2 +1,2 @@
 # FDTDsolutions-code
-the setting code use for FDTD solutions, collect and rewrite for convenience
+The codes are used in FDTD solutions, collect and rewrite for convenience
